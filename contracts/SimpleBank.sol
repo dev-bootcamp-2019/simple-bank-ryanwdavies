@@ -23,20 +23,20 @@ contract SimpleBank {
 
     function deposit() public payable returns (uint) {
         balances[msg.sender] += msg.value;
-        owner.transfer(msg.value);
         emit LogDepositMade(msg.sender, msg.value);
         return(balances[msg.sender]);  
     }   
 
     function withdraw(uint withdrawAmount) public payable returns (uint) {
-        require(balances[msg.sender] >= withdrawAmount);
-        balances[msg.sender] -= withdrawAmount;
+        require(balances[msg.sender] >= withdrawAmount && withdrawAmount >= 0, 
+                "Withdrawl ammount cannont exceed account balance.");
         msg.sender.transfer(withdrawAmount);
+        balances[msg.sender] -= withdrawAmount;
         emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
         return(balances[msg.sender]);
     }   
 
-    function() external {
+    function() external payable {
         revert();
     }   
 }
