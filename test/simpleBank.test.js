@@ -28,6 +28,7 @@ contract('SimpleBank', function(accounts) {
     assert.equal(ownerEnrolled, false, 'only enrolled users should be marked enrolled');
   });
 
+
   it("should deposit correct amount", async () => {
     const bank = await SimpleBank.deployed();
 
@@ -48,11 +49,12 @@ contract('SimpleBank', function(accounts) {
     assert.equal(expectedEventResult.amount, logDepositAmount, "LogDepositMade event amount property not emitted, check deposit method");
   });
 
+
   it("should withdraw correct amount", async () => {
     const bank = await SimpleBank.deployed();
     const initialAmount = 0;
    
-	var result = await bank.withdraw(deposit, {from: alice});
+    var result = await bank.withdraw(deposit, {from: alice});
     const balance = await bank.balance({from: alice});
 
     assert.equal(balance.toString(), initialAmount.toString(), 'balance incorrect after withdrawal, check withdraw method');
